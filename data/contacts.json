@@ -1,0 +1,17 @@
+[
+  {
+    "id": "019de477-3d31-77ba-a3d8-17eac6c98808",
+    "nama": "ketua",
+    "email": "dosen@gmai.com",
+    "nohp": "083861209020",
+    "role": "dosen",
+    "isActive": true
+  },
+  {
+    "id": "019de477-5cd3-710a-9f1f-a56dce2d8283",
+    "nama": "yuito",
+    "nohp": "08321338192",
+    "role": "mahasiswa",
+    "isActive": true
+  }
+]
