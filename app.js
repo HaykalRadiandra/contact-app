@@ -59,7 +59,7 @@ yargs(hideBin(process.argv))
     describe: "Menampilkan detail",
     builder: {
       keyword: {
-        describe: "Data detail based nama/no HP/email",
+        describe: "Data detail based no HP/email",
         demandOption: true,
         type: "string",
         alias: "k",

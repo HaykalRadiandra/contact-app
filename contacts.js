@@ -6,6 +6,8 @@ import validator from "validator";
 import { mySchema } from "./mySchema.js";
 import chalk from "chalk";
 import Table from "cli-table3";
+import removeData from "./deleteContact.js";
+import listDataDetail from "./detailContact.js";
 
 // ================= PATH =================
 const folderPath = new URL("./data", import.meta.url);
@@ -27,19 +29,19 @@ try {
 }
 
 // ================= HELPERS =================
-function loadFile() {
+export function loadFile() {
   return JSON.parse(fs.readFileSync(filePath, "utf-8"));
 }
 
-function saveFile(data) {
+export function saveFile(data) {
   fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
 }
 
-function capitalize(str) {
+export function capitalize(str) {
   return str ? str[0].toUpperCase() + str.slice(1) : "-";
 }
 
-function formatValue(val, formatFn) {
+export function formatValue(val, formatFn) {
   if (formatFn) return formatFn(val);
   if (val === "" || !val) return "-";
   return val;
@@ -118,57 +120,6 @@ export function listData() {
 }
 
 // ================= DETAIL =================
-export function listDataDetail(keyword) {
-  const contacts = loadFile();
-
-  const columns = [
-    { key: "id", label: "ID" },
-    { key: "nama", label: "Nama", format: capitalize },
-    { key: "nohp", label: "No HP" },
-    { key: "email", label: "Email" },
-    { key: "role", label: "Role", format: capitalize },
-    {
-      key: "isActive",
-      label: "Active",
-      format: (val) => (val ? "Iya" : "Tidak"),
-    },
-  ];
-
-  const result = contacts.find((c) => {
-    return c.nohp === keyword || c.email === keyword;
-  });
-
-  if (!result) {
-    console.log(chalk.red("Harus input email / no HP"));
-    return false;
-  }
-
-  const table = new Table({
-    head: [...columns.map((c) => c.label)],
-    style: { head: ["cyan"] },
-  });
-
-  table.push(columns.map((c) => formatValue(result[c.key], c.format)));
-
-  console.log(table.toString());
-}
-
+export { listDataDetail };
 // ================= DELETE =================
-export function removeData(data) {
-  const contacts = loadFile();
-
-  const newContacts = contacts.filter((contact) => {
-    return (
-      contact.id !== data && contact.email !== data && contact.nohp !== data
-    );
-  });
-
-  if (contacts.length === newContacts.length) {
-    console.log(chalk.red.bold("Data tidak ditemukan"));
-    return false;
-  }
-
-  saveFile(newContacts);
-
-  console.log(chalk.green.bold("Data berhasil di hapus"));
-}
+export { removeData };
